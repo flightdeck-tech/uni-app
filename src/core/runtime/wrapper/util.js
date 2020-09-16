@@ -7,6 +7,8 @@ import {
   isPlainObject
 } from 'uni-shared'
 
+import cloneDeep from 'lodash/cloneDeep'
+
 export const PAGE_EVENT_HOOKS = [
   'onPullDownRefresh',
   'onReachBottom',
@@ -118,13 +120,13 @@ export function initData (vueOptions, context) {
   } else {
     try {
       // 对 data 格式化
-      data = JSON.parse(JSON.stringify(data))
+      data = cloneDeep(data)
     } catch (e) {}
   }
 
-  if (!isPlainObject(data)) {
-    data = {}
-  }
+//   if (!isPlainObject(data)) {
+//     data = {}
+//   }
 
   Object.keys(methods).forEach(methodName => {
     if (context.__lifecycle_hooks__.indexOf(methodName) === -1 && !hasOwn(data, methodName)) {
@@ -286,7 +288,7 @@ export function initProperties (props, isBehavior = false, file = '') {
 function wrapper (event) {
   // TODO 又得兼容 mpvue 的 mp 对象
   try {
-    event.mp = JSON.parse(JSON.stringify(event))
+    event.mp = cloneDeep(event)
   } catch (e) {}
 
   event.stopPropagation = noop
