@@ -5614,7 +5614,8 @@ function cloneWithData(vm) {
     ret['value'] = vm.value;
   }
 
-  return JSON.parse(JSON.stringify(ret))
+//   return JSON.parse(JSON.stringify(ret))
+  return ret
 }
 
 var patch = function(oldVnode, vnode) {
